@@ -1,4 +1,4 @@
-FROM node:4-alpine
+FROM node:10.15-alpine
 WORKDIR /opt/frontend
 COPY . /opt/frontend
 RUN npm install

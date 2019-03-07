@@ -1,9 +1,9 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR ,AUTH_CHECK} from 'admin-on-rest';
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR ,AUTH_CHECK, AUTH_GET_PERMISSIONS} from 'admin-on-rest';
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
         const { username, password } = params;
-        const request = new Request('http://localhost:8080/cmad_app/api/auth/signin', {
+        const request = new Request('http://cmad-backend-api:8080/cmad_app/api/auth/signin', {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -17,6 +17,7 @@ export default (type, params) => {
             })
             .then(({ accessToken }) => {
                 localStorage.setItem('token', accessToken);
+                localStorage.setItem('role', accessToken.role);
             });
     }
 
@@ -36,6 +37,11 @@ export default (type, params) => {
 
     if (type === AUTH_CHECK) {
         return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+    }
+
+    if (type === AUTH_GET_PERMISSIONS) {
+        const role = localStorage.getItem('role');
+        return Promise.resolve(role);
     }
 
     return Promise.reject('Unkown method');

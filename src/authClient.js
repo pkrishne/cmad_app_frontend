@@ -3,7 +3,7 @@ import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR ,AUTH_CHECK, AUTH_GET_PERMISSIONS} 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
         const { username, password } = params;
-        const request = new Request('http://35.199.190.125:8080/cmad_app/api/auth/signin', {
+        const request = new Request('http://localhost:8081/cmad_app/api/auth/signin', {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -17,7 +17,7 @@ export default (type, params) => {
             })
             .then(({ accessToken }) => {
                 localStorage.setItem('token', accessToken);
-                localStorage.setItem('role', accessToken.role);
+                localStorage.setItem('role', role);
             });
     }
 
@@ -40,7 +40,14 @@ export default (type, params) => {
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
-        const role = localStorage.getItem('role');
+        const role_list = localStorage.getItem('role');
+
+        var role ="ROLE_USER";
+
+        if(role_list.indexOf('ROLE_ADMIN') > -1){
+
+            role = "ROLE_ADMIN";
+        }
         return Promise.resolve(role);
     }
 

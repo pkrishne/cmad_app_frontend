@@ -16,7 +16,10 @@ import {
     CheckboxGroupInput,
     RadioButtonGroupInput,
     ReferenceArrayInput,
-    SelectArrayInput
+    SelectArrayInput,
+    ReferenceManyField,
+    SingleFieldList,
+    ChipField
 } from 'admin-on-rest';
 
 
@@ -36,15 +39,13 @@ export const UserCreate = (props) => (
         <SimpleForm>
             <TextInput source="id" label="User ID"/>
             <TextInput source="password" label="Password" type="password" />
+            <ReferenceArrayInput label="Managed Devices" source="managed_devices_ip_list" reference="device" allowEmpty>
+                <SelectArrayInput optionText="id" />
+            </ReferenceArrayInput>
             <TextInput source="first_name" label="First Name"/>
             <TextInput source="last_name" label="Last Name" />
             <TextInput source="email" label="Email" />
             <BooleanInput label="Administrator" source="isAdmin" />
-
-            <ReferenceArrayInput label="Managed Devices" source="managed_devices_ip_list" reference="device" allowEmpty>
-                <SelectArrayInput optionText="id" />
-            </ReferenceArrayInput>
-            
         </SimpleForm>
     </Create>
 );
@@ -57,7 +58,8 @@ export const UserList = (props) => (
             <TextField source="first_name" />
             <TextField source="last_name" />
             <TextField source="email" />
-            
+        
+             
             <EditButton />
         </Datagrid>
     </List>

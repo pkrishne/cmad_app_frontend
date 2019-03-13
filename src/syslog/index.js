@@ -14,6 +14,7 @@ import {
     TextField,
     TextInput,
     Toolbar,
+    FunctionField,
     ToolbarGroup,
     FlatButton,
     ChevronLeft,ChevronRight
@@ -53,15 +54,17 @@ class SyslogList extends React.Component {
         return (
             <div>
             <Summary />
-            <List {...props} filters={<SyslogFilter />} sort={{ field: 'source', order: 'DESC' }} >
-            <Datagrid options={{ fixedHeader: true, height: 400 }}>
+            <List {...props} filters={<SyslogFilter />}  >
+            <Datagrid options={{ fixedHeader: true, height: 400 }} >
                 
-                <TextField source="source" title="User ID"/>
-                <TextField source="timestamp" />
-                <TextField source="description" />
-                <TextField source="event_type" />
+                <TextField source="source"  sortable={false}/>
+                <FunctionField  render={record => ('new Date()')} label="Recieved Time" sortable={false}/>
                 
-                <EditButton />
+           
+                <TextField source="description" sortable={false}/>
+                <TextField source="event_type" sortable={false}/>
+               
+               
             </Datagrid>
         </List>
         </div>

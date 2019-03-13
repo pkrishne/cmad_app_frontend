@@ -64,7 +64,7 @@ class Summary extends React.Component {
                 data={[["Events", "Counters"], ["Error", this.state.data.error_count], ["Warning", this.state.data.warning_count],["Notification",this.state.data.notification_count],["Alert",this.state.data.alert_count],["Info",this.state.data.info_count],['Debug',this.state.data.debug_count]]}
                 options={pieOptions}
                 graph_id="PieChart"
-                width={"50%"}
+                width={"70%"}
                 height={"200px"}
                 legend_toggle
             />

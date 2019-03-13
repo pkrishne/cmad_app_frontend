@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import React, { Component } from 'react';
-import { Admin, Delete, Resource } from 'admin-on-rest';
+import { Admin, Delete, Resource, fetchUtils, simpleRestClient } from 'admin-on-rest';
 
 import './App.css';
 
@@ -19,16 +19,26 @@ import {UserList, UserEdit, UserCreate} from './user';
 
 import {SyslogList} from './syslog';
 
-import restClient from './restClient';
-
 class App extends Component {
 
 
     render() {
+
+        const httpClient = (url, options = {}) => {
+            if (!options.headers) {
+                options.headers = new Headers({ Accept: 'application/json' });
+            }
+            const token = localStorage.getItem('token');
+            options.headers.set('Authorization', `Bearer ${token}`);
+            return fetchUtils.fetchJson(url, options);
+        }
+
+        const restClient1 = simpleRestClient('http://localhost:8081/cmad_app/v2', httpClient);
+
         return (
             <Admin
                 title="CMAD Sandboxers"
-                restClient={restClient}
+                restClient={restClient1}
                 customReducers={{ theme: themeReducer }}
                 customRoutes={customRoutes}
                 authClient={authClient}
@@ -36,10 +46,13 @@ class App extends Component {
                 appLayout={Layout}
                 menu={Menu}
                 messages={translations}
+               
             >
+
              <Resource name="syslog" list={SyslogList} />
              <Resource name="device" list={DeviceList} edit={DeviceEdit} create={DeviceCreate} remove={Delete} icon={DeviceIcon} />
              <Resource name="user" list={UserList} edit={UserEdit} create={UserCreate} remove={Delete} />
+
             </Admin>
         );
     }

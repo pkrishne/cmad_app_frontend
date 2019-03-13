@@ -16,7 +16,7 @@ import {
 } from 'admin-on-rest';
 import { stringify } from 'query-string';
 
-const API_URL = 'http://35.199.190.125:8080/cmad_app';
+const API_URL = 'http://localhost:8081/cmad_app';
 
 /**
  * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
@@ -34,7 +34,15 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
     switch (type) {
 
     case GET_LIST: {
-        url = `${API_URL}/v2/${resource}/`
+        const { page, perPage } = params.pagination;
+        const { field, order } = params.sort;
+        const query = {
+            sort: JSON.stringify([field, order]),
+            range: JSON.stringify([(page - 1) * perPage, (page * perPage) - 1]),
+            filter: JSON.stringify({ ...params.filter, [params.target]: params.id }),
+        };
+        url = `${API_URL}/v2/${resource}/?${stringify(query)}`
+
         break;
     }
     case GET_ONE:
@@ -92,7 +100,7 @@ const convertHTTPResponseToREST = (response, type, resource, params) => {
     case GET_LIST:
         return {
             data: json.map(x => x),      
-            total: json.length || parseInt(
+            total: json.total || parseInt(
                 headers
                     .get('content-range')
                     .split('/')

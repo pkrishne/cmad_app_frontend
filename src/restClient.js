@@ -16,7 +16,7 @@ import {
 } from 'admin-on-rest';
 import { stringify } from 'query-string';
 
-const API_URL = 'http://cmad-backend:8080/cmad_app';
+const API_URL = 'http://104.197.178.172:8080/cmad_app';
 
 /**
  * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'

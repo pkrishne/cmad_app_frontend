@@ -33,7 +33,7 @@ class App extends Component {
             return fetchUtils.fetchJson(url, options);
         }
 
-        const restClient1 = simpleRestClient('http://cmad-backend:8080/cmad_app/v2', httpClient);
+        const restClient1 = simpleRestClient('http://104.197.178.172:8080/cmad_app/v2', httpClient);
 
         return (
             <Admin

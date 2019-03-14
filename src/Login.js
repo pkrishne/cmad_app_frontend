@@ -88,7 +88,7 @@ class Login extends Component {
                                     <Field
                                         name="username"
                                         component={renderInput}
-                                        floatingLabelText="userid"
+                                        floatingLabelText="{translate('aor.auth.username')}"
                                     />
                                 </div>
                                 <div style={styles.input}>

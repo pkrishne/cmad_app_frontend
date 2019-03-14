@@ -15,7 +15,7 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: cmad-frontend-canary
+  name: cmad-frontend-production
 spec:
   replicas:
   template:
@@ -31,8 +31,8 @@ spec:
         image: gcr.io/cmad-project-sandboxers/github.com/prasadgowda87/cmad_app_frontend:latest
         resources:
           limits:
-            memory: "500Mi"
-            cpu: "100m"
+            memory: "1Gi"
+            cpu: "200m"
         imagePullPolicy: Always
         ports:
         - name: frontend

@@ -58,7 +58,7 @@ export const UserList = (props) => (
             <TextField source="first_name" />
             <TextField source="last_name" />
             <TextField source="email" />
-        
+            <TextField source="managed_devices_ip_list" />
              
             <EditButton />
         </Datagrid>

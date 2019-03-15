@@ -58,7 +58,7 @@ class SyslogList extends React.Component {
             <Datagrid options={{ fixedHeader: true, height: 400 }} >
                 
                 <TextField source="source"  sortable={false}/>
-                <FunctionField  render={record => ('new Date()')} label="Recieved Time" sortable={false}/>
+                <FunctionField  render={record => {return  new Date(Number(`${record.timestamp}`*1000)).toLocaleString()}} label="Recieved Time" sortable={false}/>
                 
            
                 <TextField source="description" sortable={false}/>
